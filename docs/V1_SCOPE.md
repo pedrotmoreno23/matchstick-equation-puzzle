@@ -1,3 +1,28 @@
+# V1 Scope Definition  
+## Matchstick Equation Puzzle
+
+---
+
+## Purpose of V1
+
+Version 1 (V1) defines the smallest complete and technically solid playable version.
+
+Goals:
+
+- Deliver a working puzzle system
+- Implement flexible slot/segment architecture
+- Build a general equation validator
+- Avoid architectural refactoring later
+
+V1 prioritizes correctness and structure over visuals.
+
+---
+
+## Equation Structure (V1)
+
+All equations follow this fixed format:
+
+S A op B = C
 
 Where:
 
