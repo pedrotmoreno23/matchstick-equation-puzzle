@@ -1,213 +1,142 @@
-V1 Scope Definition
-Matchstick Equation Puzzle
+# V1 Scope Definition  
+## Matchstick Equation Puzzle
 
-Purpose of V1
-Version 1 (V1) defines the smallest complete, playable, and technically solid version of the game.
-The goal of V1 is to:
-Deliver a fully working puzzle system
+---
 
+## Purpose of V1
 
-Implement a flexible slot/segment architecture
+Version 1 (V1) defines the smallest complete and technically solid playable version.
 
+Goals:
 
-Build a general equation validator
+- Deliver a working puzzle system
+- Implement flexible slot/segment architecture
+- Build a general equation validator
+- Avoid architectural refactoring later
 
+V1 prioritizes correctness and structure over visuals.
 
-Prove technical completeness before adding complexity
+---
 
+## Equation Structure (V1)
 
-V1 is focused on correctness and system design, not advanced visuals or extended mechanics.
+All equations follow this format:
 
-Equation Structure (V1)
-All equations in V1 follow a fixed structure:
 A op B = C
 
+
 Where:
-A, B, and C are single digits (0–9)
 
+- A, B, C → single digits (0–9)
+- op → one operator
+- = → required
 
-op is one operator
+### Total Slots: 5
 
-
-= is fixed and required
-
-
-Total slots: 5
-Digit
-
-
-Operator
-
-
-Digit
-
-
-Equals sign
-
-
-Digit
-
+1. Digit
+2. Operator
+3. Digit
+4. Equals
+5. Digit
 
 No multi-digit numbers in V1.
 
-Supported Symbols (System-Level Support)
-The slot system must be capable of representing:
-Digits
+---
+
+## Supported Symbols (System-Level)
+
+The system must support:
+
+### Digits
 0–9
-Operators
-Addition (+)
 
+### Operators
+- Addition (+)
+- Subtraction (−)
+- Multiplication (×)
+- Division (÷)
 
-Subtraction (−)
+### Equality
+- Equals (=)
 
+Even if early levels focus on + and −, all four operators must be supported architecturally.
 
-Multiplication (×)
+---
 
+## Move Rules (V1)
 
-Division (÷)
-
-
-Equality
-Equals (=)
-
-
-Even if early levels focus on + and −, the system must technically support all four operators from the start to avoid architectural refactoring later.
-
-Move Rules (V1)
-The player may move exactly 1 matchstick per level.
-
-
-A move consists of:
-
-
-Removing one stick from any symbol
-
-
-Placing it into any valid segment position
-
+- Exactly **1 matchstick move per level**
+- A move consists of:
+  - Removing one stick
+  - Placing it in a valid segment position
 
 After the move:
-All slots must form valid digits/operators
 
+- All slots must form valid symbols
+- The equation must evaluate to true
 
-The equation must evaluate to true
+---
 
+## Validation Rules
 
+When CHECK is pressed:
 
-Equation Validation Rules
-When the player presses CHECK:
-Each slot must correspond to a valid digit or operator.
+1. Each slot must represent a valid symbol
+2. Equation must be syntactically valid
+3. LHS must equal RHS
+4. Division must result in integers only
+5. Not allowed:
+   - `!=`
+   - `<>`
+   - Custom operators
 
+Standard precedence applies, though format prevents ambiguity.
 
-The equation must be syntactically valid.
+---
 
+## Slot & Segment Requirements
 
-The left-hand side must evaluate numerically equal to the right-hand side.
+- Every slot is segment-based
+- Must support:
+  - Any digit (0–9)
+  - Any operator (+ − × ÷)
+  - Equals (=)
+- Only one visual variation per digit in V1
 
+Segments must allow dynamic activation/deactivation.
 
-Division must result in an integer (no decimals allowed).
+---
 
+## Level Constraints (V1)
 
-The following are NOT allowed:
+- Fixed 5-slot equations
+- Exactly 1 valid move
+- No timers
+- No scoring system
+- Minimal UI only
 
+---
 
-!=
+## Out of Scope (Not in V1)
 
+- Multi-digit numbers
+- Variable equation lengths
+- Multiple allowed moves
+- Alternative digit variations
+- Exponents
+- Level editor
+- Hints
+- Sound
+- Advanced animations
 
-<>
+---
 
+## V1 Completion Criteria
 
-Any custom comparison operators
+V1 is complete when:
 
-
-Standard arithmetic precedence applies:
-× and ÷ before + and −
-
-
-However, due to fixed structure A op B = C, precedence does not create ambiguity in V1.
-
-Slot & Segment System Requirements
-Every slot is segment-based.
-
-
-A slot must be capable of representing:
-
-
-Any digit 0–9
-
-
-Any operator (+ − × ÷)
-
-
-Equals (=)
-
-
-Only one visual variation per digit is supported in V1 (e.g., only one version of 4).
-
-
-The system must allow dynamic transformation via segment activation/deactivation.
-
-Level Design Constraints (V1)
-Fixed 5-slot equations only.
-
-
-Exactly 1 valid move required to solve.
-
-
-No time limits.
-
-
-No scoring system.
-
-
-No animations required (minimal UI acceptable).
-
-
-
-Explicitly Out of Scope (Not in V1)
-Multi-digit numbers
-
-
-Variable-length equations
-
-
-Multiple allowed moves per level
-
-
-Alternative digit visual forms
-
-
-Exponents
-
-
-Adding/removing sticks beyond the single-move rule
-
-
-Level editor
-
-
-Hints system
-
-
-Sound effects
-
-
-Advanced animations
-
-
-
-Success Criteria for V1
-V1 is considered complete when:
-The player can play multiple levels
-
-
-Matchstick movement works correctly
-
-
-Equation validation is fully reliable
-
-
-The game can handle all 0–9 and all four operators
-
-
-No refactoring is required to add more levels
+- Multiple levels are playable
+- Matchstick movement works reliably
+- Equation validation is fully correct
+- All digits and operators are supported
+- Adding levels requires no refactoring

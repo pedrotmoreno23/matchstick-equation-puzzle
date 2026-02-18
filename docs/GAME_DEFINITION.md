@@ -1,112 +1,120 @@
-Matchstick Equation Puzzle — 1-Page Game Definition (Draft)
-Overview
+# Matchstick Equation Puzzle  
+## Game Definition
 
-Matchstick Equation Puzzle is a logic game where the player fixes a broken math equation by moving one or more matchsticks. Each number and operator is drawn using matchsticks (like a digital/segment style). A level is solved when the displayed equation becomes mathematically true after the allowed moves.
+---
 
-The game is designed to be simple, fast, and addictive: quick puzzles, satisfying “aha!” moments, and lots of levels.
+## Overview
 
-Core Gameplay
+**Matchstick Equation Puzzle** is a logic game where the player fixes a broken math equation by moving one or more matchsticks.
 
-The screen shows a wrong equation made of matchsticks (example format: A op B = C).
+Each number and operator is drawn using matchsticks (segment-style).  
+A level is solved when the displayed equation becomes mathematically true after the allowed moves.
 
-The player can move matchsticks from one place to another.
+The game is designed to be:
+- Simple
+- Fast
+- Addictive
+- Focused on satisfying “aha!” moments
 
-After moving sticks, the player taps CHECK.
+---
 
-The game validates the resulting equation automatically.
+## Core Gameplay
 
-Rules
+- The screen shows an incorrect equation (format: `A op B = C`)
+- The player moves matchsticks
+- The player taps **CHECK**
+- The system validates the equation automatically
 
-The player may move 1 or more matchsticks, based on the level’s limit (“Moves Allowed”).
+---
 
-A move means:
+## Rules
 
-picking up one stick from anywhere in the equation
+### Move Rules
 
-placing it somewhere else that forms a valid digit or operator shape
+- The player may move **1 or more matchsticks**, depending on the level.
+- A move consists of:
+  - Removing one stick from any symbol
+  - Placing it in a valid segment position
 
-The final equation must be valid and true.
+### Valid Solution Requirements
 
-“Easy hacks” are not allowed:
+- The final equation must be mathematically true.
+- All slots must form valid digits/operators.
+- Trivial comparison hacks are NOT allowed:
+  - `!=`
+  - `<>`
 
-!= and <> do not count as valid operators or valid “solutions”.
+---
 
-The game supports:
+## Supported Symbols
 
-Digits: 0–9
+### Digits
+- 0–9
 
-Operators: +, −, ×, ÷
+### Operators
+- `+`
+- `−`
+- `×`
+- `÷`
 
-Equals: =
+### Equality
+- `=`
 
-Some symbols may have multiple valid visual forms (example: two variations of the digit 4).
+Some symbols may have multiple visual variations (example: alternate forms of 4).
 
-Equation Validation (Important Design Choice)
+---
 
-Instead of hardcoding solutions, the game uses a general equation checker, so it can accept solutions the developer didn’t personally predict.
+## Equation Validation (Key Design Decision)
 
-Validation checks:
+The game uses a **general equation validator** rather than hardcoded answers.
 
-Each “slot” in the equation must be a valid digit/operator (no broken shapes).
+Validation must ensure:
 
-The expression must be parseable (ex: 7 + 2 = 9).
+1. Each slot represents a valid digit or operator
+2. The equation is syntactically valid
+3. Left-hand side equals right-hand side
+4. Division results must be integers (no decimals)
 
-Evaluate left side and right side and confirm they match.
+---
 
-Notes:
+## Visual Representation System (Slots)
 
-Division rules should be clear (v1 suggestion):
+- The equation consists of left-to-right **slots**
+- Each slot is segment-based
+- Each slot must be capable of representing:
+  - Any digit (0–9)
+  - Any operator (+ − × ÷)
+  - Equals (=)
 
-Only allow divisions that result in integers (no decimals), to keep puzzles clean.
+This allows sticks to move between slots dynamically.
 
-Multiplication uses standard precedence rules OR we can enforce simple format like A op B = C to avoid precedence confusion.
+---
 
-Visual Representation System (Slots)
-
-The equation is made of slots laid out left-to-right.
-
-Each slot can display a digit or operator.
-
-A slot is segment-based, meaning it has a fixed set of possible stick positions.
-
-Any slot must be capable of representing any digit 0–9 or any operator (+ − × ÷ =), depending on which segments are active.
-
-This allows moving sticks between slots while keeping the UI consistent.
-
-Level Structure
+## Level Structure
 
 Each level defines:
 
-Initial equation layout (which slots exist)
+- Initial equation layout
+- Allowed number of moves
+- Optional hint text
+- Win condition (equation evaluates true)
 
-Allowed moves (1, 2, 3, etc.)
+---
 
-Optional hint text
+## Constraints / Early Non-Goals
 
-Win condition: “equation evaluates true”
+- No `!=` or `<>`
+- No free-form input
+- No multiplayer
+- Minimal animations
+- Focus on correctness and architecture first
 
-The game can include many levels because the rules are simple and reusable.
+---
 
-Constraints / Non-Goals (for early versions)
+## Why This Game Works
 
-To keep development manageable:
-
-No != or <>
-
-No free-form text entry; everything is done via sticks/segments
-
-No multiplayer, no bots
-
-Minimal animations in early versions
-
-Focus on correctness, clarity, and level volume first
-
-Why This Game Works
-
-Simple mechanic, deep puzzle variety
-
-Short play sessions
-
-Easy to add content (levels)
-
-Feels “new” because multiple solutions can exist and the checker can accept them
+- Simple mechanic
+- High puzzle depth
+- Short play sessions
+- Multiple valid solutions possible
+- Easily expandable
