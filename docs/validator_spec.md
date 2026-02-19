@@ -1,10 +1,10 @@
 # Validator Specification (V1)
 
-This document defines the exact behavior of the CHECK system for V1.
+This document defines the exact behavior of the CHECK system for Version 1.
 
-The validator operates strictly from final slot states.
+The validator operates strictly from the final slot states.
 
-It does not track moves.
+It does not track stick movements.
 It does not manage animations.
 It only validates the final equation state.
 
@@ -20,6 +20,39 @@ Index | Meaning
 4 | Equals (=) — fixed slot
 5 | Digit C (0–9)
 
+All V1 equations strictly follow this structure.
+
+---
+
+# Operator Slot Architecture (Crossed-Box System)
+
+Slot 2 (Operator) uses a crossed-box segment layout.
+
+The operator slot must support the following segment positions:
+
+- Horizontal segment
+- Vertical segment
+- Diagonal segment (top-left → bottom-right)
+- Diagonal segment (bottom-left → top-right)
+
+These four possible segment positions allow representation of:
+
++  → horizontal + vertical  
+−  → horizontal only  
+×  → both diagonals  
+/  → exactly one diagonal  
+
+Only the following exact segment combinations are valid in V1:
+
++  = horizontal + vertical  
+−  = horizontal only  
+×  = diagonal_1 + diagonal_2  
+/  = exactly one diagonal  
+
+Any other segment combination in slot 2 is invalid.
+
+This ensures flexible operator transformations while maintaining strict validation.
+
 ---
 
 # Step 1 — Symbol Validation
@@ -30,7 +63,7 @@ Before evaluation, all slots must be validated.
 - Must be either:
   - Empty (no active segments)
   - A valid minus sign shape
-- No other symbol allowed here.
+- No other symbol allowed.
 
 ## Slot 1, 3, 5 (Digits)
 - Must form valid digits 0–9.
@@ -38,21 +71,20 @@ Before evaluation, all slots must be validated.
 - Only one visual variation per digit allowed in V1.
 
 ## Slot 2 (Operator)
-Must be exactly one of:
+Must match one of:
 - +
 - −
 - ×
 - /
 
-No other symbol allowed.
-
 ## Slot 4 (Equals)
 - Must represent "=".
-- This slot is fixed by structure and cannot become another symbol.
+- This slot is fixed by structure.
+- It cannot represent any other symbol.
 
 If any slot fails validation:
 
-Return: `INVALID_SYMBOL_STATE`
+Return: INVALID_SYMBOL_STATE
 
 ---
 
@@ -94,7 +126,7 @@ If OP == "/"
         return INVALID_DIVISION
     result = A / B
 
-Division must always produce an integer.
+Division must always produce an integer result.
 
 ---
 
@@ -118,16 +150,18 @@ The validator must reject:
 - Non-integer division
 - Missing operator
 - Missing equals
-- Any slot containing an unsupported symbol
+- Any unsupported symbol configuration
 
 ---
 
 # Move Count
 
-The validator assumes:
-- Exactly 1 matchstick move per level (V1 rule)
+V1 levels are designed to require exactly one stick move.
 
-Move tracking is handled outside this system.
+The validator does not track how many sticks were moved.
+
+Future versions may support multiple moves, adding sticks, or removing sticks.
+Move tracking is outside the validator’s responsibility.
 
 ---
 
@@ -135,10 +169,11 @@ Move tracking is handled outside this system.
 
 The validator does NOT:
 
-- Track how many sticks were moved
-- Check if the initial equation was incorrect
+- Track stick movement history
+- Enforce move count
 - Validate drag interactions
-- Enforce snapping rules
+- Enforce snapping logic
+- Check if the initial equation was incorrect
 - Manage UI feedback
 
 It only validates the final slot configuration.
