@@ -13,10 +13,10 @@ This file collects candidate levels with:
 ## Level 001
 
 **Incorrect:**  
-5 + 4 = 2
+5 + 4 = 2 ![alt text](image.png)
 
 **Correct:**  
-6 - 4 = 2
+6 - 4 = 2 ![alt text](image-1.png)
 
 **Move:**  
 Move the vertical stick from `+` to the lower-left side of the `5`. This turns `+` into `-` and `5` into `6`.
